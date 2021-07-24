@@ -53,7 +53,7 @@ const Router = () => {
         />
         <Route exact path="/login" component={LoginPage} />
         <ProtectedRoute exact path="/workbooks" component={WorkbookPage} />
-        <ProtectedRoute exact path="signup" component={UserSignupPage} />
+        <ProtectedRoute exact path="/signup" component={UserSignupPage} />
         <Route exact path="/logout" component={LogoutPage} />
         <Route exact path="/auth/:provider" component={MainPage} />
         <Route path="*" component={NotFoundPage} />
