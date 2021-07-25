@@ -1,21 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import PageLayout from "parts/PageLayout";
+import { UserContext } from "services/user";
 import { Box, Container, Checkbox, Heading, SimpleGrid, Input, Text, Button } from "@chakra-ui/react";
 
 const UserSignupPage = () => {
-
+    const { user, patchUserFromAPI } = useContext(UserContext); 
     const [formData, setFormData] = useState({});
 
     const history = useHistory();
 
     const handleChange = (event) => {
-        
         const id = event.target.id;
         let value;
         event.target.type === 'checkbox' ? value = event.target.checked : value = event.target.value;
         
         setFormData({...formData, [id]: value});
+    }
+
+    const handleFileUpload = () => {
+        const selectedFile = document.getElementById('upload').files[0]
+        console.log(selectedFile)
+        setFormData({...formData, "picture": selectedFile})
     }
 
     useEffect(() => {
@@ -26,8 +32,11 @@ const UserSignupPage = () => {
         history.push("/workbooks");
     };
 
-    const handleSubmit = () => {
-        alert(JSON.stringify(formData));
+    const handleSubmit = async () => {
+        // alert(JSON.stringify(formData));
+        console.log(formData)
+        await patchUserFromAPI(formData);
+        console.log('the saved user?', user)
     };
 
     return (
@@ -41,30 +50,30 @@ const UserSignupPage = () => {
                     <Input id="name" variant="flushed" onChange={handleChange}/>
 
                     <Box align="right" paddingTop="8px">Organization</Box>
-                    <Input id="organization" variant="flushed" onChange={handleChange}/>
+                    <Input id="company" variant="flushed" onChange={handleChange}/>
 
-                    <Box align="right" paddingTop="8px">Title</Box>
-                    <Input id="title" variant="flushed" onChange={handleChange}/>
+                    <Box align="right" paddingTop="8px">Location</Box>
+                    <Input id="location" variant="flushed" onChange={handleChange}/>
 
-                    <Box align="right" paddingTop="8px">Role</Box>
-                    <Input id="role" variant="flushed" onChange={handleChange}/>
+                    <Box align="right" paddingTop="8px">Profile Picture</Box>
+                    <input type="file" id="upload" multiple onChange={handleFileUpload}/>
 
                     <Box align="right" paddingTop="8px">What space are you working in?</Box>
                     <SimpleGrid columns={2} spacingX="40px" spacingY="10px">
 
-                        <Checkbox id="cb-researcher" onChange={handleChange}>Researcher</Checkbox>
+                        <Checkbox id="cb-researcher">Researcher</Checkbox>
 
-                        <Checkbox id="cb-investor" onChange={handleChange}>Investor</Checkbox>
+                        <Checkbox id="cb-investor">Investor</Checkbox>
 
-                        <Checkbox id="cb-policymaker" onChange={handleChange}>Policymaker</Checkbox>
+                        <Checkbox id="cb-policymaker">Policymaker</Checkbox>
 
-                        <Checkbox id="cb-other" onChange={handleChange}>Other</Checkbox>
+                        <Checkbox id="cb-other">Other</Checkbox>
 
-                        <Checkbox id="cb-student" onChange={handleChange}>Student</Checkbox>
+                        <Checkbox id="cb-student">Student</Checkbox>
 
                     </SimpleGrid>
                     <Box align="right" paddingTop="8px">
-                        <Checkbox id="cb-accept-terms" onChange={handleChange}></Checkbox>
+                        <Checkbox id="cb-accept-terms"></Checkbox>
                     </Box>
                     <Box paddingTop="3px">
                         I accept the terms and conditions as detailed in the ...
