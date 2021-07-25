@@ -15,6 +15,7 @@ import MainPage from "routes/MainPage";
 import NotFoundPage from "routes/NotFoundPage";
 import { UserContext } from "services/user";
 import UserSignupPage from "routes/UserSignupPage";
+import UserSignupPageFormik from "routes/UserSignupPageFormik";
 
 const ProtectedRoute = ({ component: Component, ...rest}) => {
   const { user, fetched } = useContext(UserContext);
@@ -53,7 +54,7 @@ const Router = () => {
         />
         <Route exact path="/login" component={LoginPage} />
         <ProtectedRoute exact path="/workbooks" component={WorkbookPage} />
-        <ProtectedRoute exact path="/signup" component={UserSignupPage} />
+        <ProtectedRoute exact path="/signup" component={UserSignupPageFormik} />
         <Route exact path="/logout" component={LogoutPage} />
         <Route exact path="/auth/:provider" component={MainPage} />
         <Route path="*" component={NotFoundPage} />
