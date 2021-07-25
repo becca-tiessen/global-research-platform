@@ -164,18 +164,13 @@ const UserSignupPage = () => {
                                     </label>
 
                                 </SimpleGrid>
+                                
                                 <Box align="right" paddingTop="8px">
-                                    <Field type="checkbox" id="cb-user-agreement" name="cb-user-agreement" value="userAgreement"/>
-                                </Box>
-                                <Box paddingTop="3px">
-                                    I accept the terms and conditions as detailed in the ...
-                                </Box>
-                                <Box align="right" paddingTop="8px">
-                                    <Field name="userAgreement">
+                                    <Field>
                                         {({ field, form }) => (
                                             <FormControl isInvalid={form.errors.userAgreement }>
                                                 
-                                                <Field type="checkbox" id="cb-user-agreement" name="userAgreement" value="userAgreement" validate={validateUserAgreement}/>
+                                                <Field type="checkbox" id="cb-user-agreement" name="userAgreement"  validate={validateUserAgreement}/>
                                                 
                                                 <FormErrorMessage>{form.errors.userAgreement}</FormErrorMessage>
                                             </FormControl>
