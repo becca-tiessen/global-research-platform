@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import PageLayout from "parts/PageLayout";
 import { UserContext } from "services/user";
 import { Box, Container, Checkbox, Heading, SimpleGrid, Input, Text, Button } from "@chakra-ui/react";
+import { fetchUser } from "api/api";
 
 const UserSignupPage = () => {
     const { user, patchUserFromAPI } = useContext(UserContext); 
@@ -24,19 +25,21 @@ const UserSignupPage = () => {
         setFormData({...formData, "picture": selectedFile})
     }
 
-    useEffect(() => {
-        console.log(formData);
-    }, [formData])
+    // useEffect(() => {
+    //     console.log(formData);
+    // }, [formData])
 
     const handleSkipClick= () => {
         history.push("/workbooks");
     };
 
     const handleSubmit = async () => {
-        // alert(JSON.stringify(formData));
+        
         console.log(formData)
         await patchUserFromAPI(formData);
-        console.log('the saved user?', user)
+        // console.log('the saved user?', user)
+        // const data = await fetchUser().json();
+        // await console.log(JSON.stringify(data));
     };
 
     return (
@@ -47,16 +50,16 @@ const UserSignupPage = () => {
                 <SimpleGrid columns={2} spacingX="40px" spacingY="20px">
 
                     <Box align="right" paddingTop="8px">Name</Box>
-                    <Input id="name" variant="flushed" onChange={handleChange}/>
+                    <Input id="name" variant="flushed" onChange={handleChange} focusBorderColor="#00477D"/>
 
                     <Box align="right" paddingTop="8px">Organization</Box>
-                    <Input id="company" variant="flushed" onChange={handleChange}/>
+                    <Input id="company" variant="flushed" onChange={handleChange} focusBorderColor="#00477D"/>
 
                     <Box align="right" paddingTop="8px">Location</Box>
-                    <Input id="location" variant="flushed" onChange={handleChange}/>
+                    <Input id="location" variant="flushed" onChange={handleChange} focusBorderColor="#00477D"/>
 
-                    <Box align="right" paddingTop="8px">Profile Picture</Box>
-                    <input type="file" id="upload" multiple onChange={handleFileUpload}/>
+                    <Box align="right" paddingTop="8px">Profile Picture URL</Box>
+                    <Input id="picture" variant="flushed" onChange={handleChange} focusBorderColor="#00477D"/>
 
                     <Box align="right" paddingTop="8px">What space are you working in?</Box>
                     <SimpleGrid columns={2} spacingX="40px" spacingY="10px">
