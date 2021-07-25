@@ -1,45 +1,27 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import PageLayout from "parts/PageLayout";
 import { UserContext } from "services/user";
 import { Box, Container, Checkbox, Heading, SimpleGrid, Input, Text, Button } from "@chakra-ui/react";
-import { fetchUser } from "api/api";
 
 const UserSignupPage = () => {
-    const { user, patchUserFromAPI } = useContext(UserContext); 
+    const { patchUserFromAPI } = useContext(UserContext); 
     const [formData, setFormData] = useState({});
-
     const history = useHistory();
 
     const handleChange = (event) => {
         const id = event.target.id;
         let value;
         event.target.type === 'checkbox' ? value = event.target.checked : value = event.target.value;
-        
         setFormData({...formData, [id]: value});
     }
-
-    const handleFileUpload = () => {
-        const selectedFile = document.getElementById('upload').files[0]
-        console.log(selectedFile)
-        setFormData({...formData, "picture": selectedFile})
-    }
-
-    // useEffect(() => {
-    //     console.log(formData);
-    // }, [formData])
 
     const handleSkipClick= () => {
         history.push("/workbooks");
     };
 
     const handleSubmit = async () => {
-        
-        console.log(formData)
-        await patchUserFromAPI(formData);
-        // console.log('the saved user?', user)
-        // const data = await fetchUser().json();
-        // await console.log(JSON.stringify(data));
+        await patchUserFromAPI();
     };
 
     return (
